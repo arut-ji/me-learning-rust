@@ -1,5 +1,12 @@
 use std::env;
+use std::error::Error;
 use std::fs;
+use std::process;
+
+pub struct Config {
+    pub query: String,
+    pub filename: String,
+}
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -11,15 +18,7 @@ fn main() {
 
     println!("In file {}", config.filename);
 
-    let contents =
-        fs::read_to_string(config.filename).expect("Someting went wrong reading the file");
-
-    println!("Wit text:\n{}", contents);
-}
-
-struct Config {
-    query: String,
-    filename: String,
+    run(config);
 }
 
 impl Config {
@@ -33,4 +32,12 @@ impl Config {
 
         Ok(Config { query, filename })
     }
+}
+
+pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.filename)?;
+
+    println!("With text:\n{}", contents);
+
+    Ok(())
 }
