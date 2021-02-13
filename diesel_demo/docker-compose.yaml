@@ -1,0 +1,17 @@
+version: "3.5"
+
+services:
+  postgresql:
+    image: docker.io/bitnami/postgresql:11-debian-10
+    ports:
+      - 5432:5432
+    volumes:
+      - ./volume:/bitnami/postgresql
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_USERNAME=username
+      - POSTGRESQL_PASSWORD=password
+
+#volumes:
+#  postgresql_data:
+#    driver: local
